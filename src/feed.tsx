@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, ScrollView, Text, Dimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useTheme } from 'react-native-paper';
 
@@ -7,10 +7,25 @@ import { Twitt } from './components/twitt';
 import { twitts } from './data';
 import { StackNavigatorParamlist } from './types';
 
+import Caro from './components/carousel';
+import { RecipeCard } from './components/recipeCard';
+
 type TwittProps = React.ComponentProps<typeof Twitt>;
 
+const cardWith = Dimensions.get('window').width * 0.85;
+
 function renderItem({ item }: { item: TwittProps }) {
-  return <Twitt {...item} />;
+  return (
+    <View
+      style= {{flexDirection: 'row', justifyContent: 'center'}}
+    >
+      <View
+      style= {{width: cardWith}}
+      >
+      <RecipeCard {...item} />
+      </View>
+    </View>
+  );
 }
 
 function keyExtractor(item: TwittProps) {
@@ -34,15 +49,30 @@ export const Feed = (props: Props) => {
   }));
 
   return (
-    <FlatList
-      contentContainerStyle={{ backgroundColor: theme.colors.background }}
-      style={{ backgroundColor: theme.colors.background }}
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={keyExtractor}
-      ItemSeparatorComponent={() => (
-        <View style={{ height: StyleSheet.hairlineWidth }} />
-      )}
-    />
+    <ScrollView>
+      <Text style={styles.topicText}>New</Text>
+      <Caro data={data} />
+      <Text style={styles.topicText}>Recently Viewed</Text>
+      <FlatList
+        contentContainerStyle={{ backgroundColor: theme.colors.background}}
+        style={{ backgroundColor: theme.colors.background }}
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        ItemSeparatorComponent={() => (
+          <View style={{ height: 20 }} />
+        )}
+      />
+      <View style={{height: 20}}/>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  topicText: {
+    paddingLeft: 20,
+    paddingTop: 15,
+    paddingBottom: 15,
+    fontSize: 20,
+  },
+});
