@@ -4,15 +4,24 @@ import { Button } from "react-native-paper";
 import { connect } from "react-redux";
 
 import { addBookmark, removeBookmark } from "./actions/bookmarkActions";
+import { AppActions } from "./types/actions";
+import { storeTypes } from "./types/store";
 
 const id = 2;
 
-@connect((store) => {
+interface Props {
+  bookmarks: number[];
+  dispatch: (action:AppActions) => void;
+}
+
+interface State {}
+
+@connect((store:storeTypes) => {
   return {
     bookmarks: store.bookmarks,
   };
 })
-export default class App extends React.Component {
+export default class App extends React.Component<Props,State> {
   render() {
     const bookmarks = this.props.bookmarks;
     return (

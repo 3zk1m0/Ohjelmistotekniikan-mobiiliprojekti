@@ -1,7 +1,8 @@
+import { BookmarkActionTypes } from "../types/actions";
 
+const initState: number[] = [];
 
-
-export default function reducer(state=[], action) {
+export default (state=initState, action: BookmarkActionTypes): number[] => {
     switch (action.type) {
       case 'ADD_BOOKMARK':
         if (state.includes(action.payload)) return [...state]

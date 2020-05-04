@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import { AsyncStorage } from "react-native";
 
 import { logger } from './middleware/storage';
-import rootReducer from "./reducers";
+import { rootReducer } from "./reducers";
 
 const middleware = applyMiddleware(logger)
 

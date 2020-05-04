@@ -1,11 +1,9 @@
 
+import { AppActions } from "../types/actions"
 
-
-export const appendRecent (id) => {
-    return {
-        type: "APPEND_RECENT",
-        payload: {
-            id
-        }
+export const appendRecent = (id: number): AppActions => (
+    {
+      type: "APPEND_RECENT",
+      payload: id
     }
-}
+  )

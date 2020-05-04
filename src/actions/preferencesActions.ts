@@ -1,11 +1,7 @@
+import { AppActions } from "../types/actions"
 
-
-
-
-export function toggleDarkMode() {
-    return {
-      type: "TOGGLE_DARK_MODE",
-      payload: null
-    }
+export const toggleDarkMode = (): AppActions => (
+  {
+    type: "TOGGLE_DARK_MODE",
   }
-  
+)

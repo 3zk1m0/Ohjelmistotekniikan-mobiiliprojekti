@@ -1,16 +1,17 @@
+import { AppActions } from "../types/actions"
 
 
 
-export function addBookmark(id) {
-  return {
+export const addBookmark = (id: number): AppActions => (
+  {
     type: "ADD_BOOKMARK",
     payload: id
   }
-}
+)
 
-export function removeBookmark(id) {
-  return {
-    type: "REMOVE_BOOKMARK",
-    payload: id
+export const removeBookmark = (id: number): AppActions => (
+  {
+   type: "REMOVE_BOOKMARK",
+   payload: id
   }
-}
+)
