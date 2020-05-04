@@ -1,23 +1,23 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { useTheme } from 'react-native-paper';
+import React from "react";
+import { View, StyleSheet, Text } from 'react-native';
+import { Button } from "react-native-paper";
 
-import { StackNavigator } from './stack';
-import { DrawerContent } from './drawerContent';
+//import TopBar from "./components/TopBar";
 
-const Drawer = createDrawerNavigator();
+import App from './app';
 
-export const RootNavigator = () => {
-  const theme = useTheme();
-  const navigationTheme = theme.dark ? DarkTheme : DefaultTheme;
-
+const RootNavigator = () => {
   return (
-    <NavigationContainer theme={navigationTheme}>
-      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
-        <Drawer.Screen name="Home" component={StackNavigator} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <App/>
   );
 };
+
+const styleSheet = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+})
+
+export default RootNavigator;
