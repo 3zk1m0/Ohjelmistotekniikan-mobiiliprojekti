@@ -18,6 +18,7 @@ const _id = 2;
 
 interface Props {
   bookmarks: number[];
+  recent: number[];
   dispatch: (action: AppActions) => void;
 }
 
