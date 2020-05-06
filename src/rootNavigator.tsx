@@ -1,23 +1,21 @@
-import React from "react";
-import { View, StyleSheet, Text } from 'react-native';
-import { Button } from "react-native-paper";
+// In App.js in a new project
 
-//import TopBar from "./components/TopBar";
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import App from './app';
+import StackNavigator from './StackNavigator';
 
-const RootNavigator = () => {
+
+
+const Drawer = createDrawerNavigator();
+
+export default function App() {
   return (
-    <App/>
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Stack">
+        <Drawer.Screen name="Stack" component={StackNavigator} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
-};
-
-const styleSheet = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
-
-export default RootNavigator;
+}
