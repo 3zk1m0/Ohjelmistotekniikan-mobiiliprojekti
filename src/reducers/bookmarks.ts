@@ -10,6 +10,7 @@ export default (state=initState, action: BookmarkActionTypes): number[] => {
       case 'REMOVE_BOOKMARK':
         return [...state].filter(id => id != action.payload);
       case 'TOGGLE_BOOKMARK':
+        console.log(state.includes(action.payload))
         if (!state.includes(action.payload)) return [...state, action.payload]
         return [...state].filter(id => id != action.payload);
       default:

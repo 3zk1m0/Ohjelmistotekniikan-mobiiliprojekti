@@ -1,6 +1,6 @@
 
 
-export interface Recipe {
+export interface RecipeType {
     id: number;
     title: string;
 }
