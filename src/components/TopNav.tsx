@@ -8,7 +8,7 @@ import { Button, Paragraph, Menu, Divider, Provider } from "react-native-paper";
 interface Props {
   title: string;
   navigation: DrawerNavigationProp<any>;
-  previous?: Boolean;
+  previous?: any;
 }
 
 class MenuBar extends React.Component {
@@ -27,10 +27,9 @@ class MenuBar extends React.Component {
         onDismiss={this._closeMenu}
         anchor={<Appbar.Action icon="dots-vertical" onPress={this._openMenu} />}
       >
-        <Menu.Item onPress={() => {}} title="Item 1" />
-        <Menu.Item onPress={() => {}} title="Item 2" />
-        <Divider />
-        <Menu.Item onPress={() => {}} title="Item 3" />
+        <Menu.Item onPress={() => {}} title="Help / FAQ" />
+        <Menu.Item onPress={() => {}} title="About Us" />
+        <Menu.Item onPress={() => {}} title="Preferences" />
       </Menu>
     );
   }
@@ -45,7 +44,7 @@ export default class TopNav extends React.Component<Props, {}> {
         {previous ? 
         <Appbar.BackAction
           onPress={() => {
-            this.props.navigation.openDrawer();
+            this.props.navigation.goBack();
           }}
         />
         :

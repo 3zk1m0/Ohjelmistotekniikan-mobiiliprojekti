@@ -1,25 +1,35 @@
 import * as React from "react";
-import { View, Text } from "react-native";
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import HomeScreen from "./HomeScreen";
-
-
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
+import BookmarkScreen from "./BookmarkScreen";
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Bookmarks"
+        component={BookmarkScreen}
+        options={{
+          tabBarLabel: "Bookmarks",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="bookmark" color={color} size={26} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };

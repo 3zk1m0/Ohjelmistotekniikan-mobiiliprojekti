@@ -16,18 +16,19 @@ import { recipes } from "./data/recipes"
 interface Props {
   recipes: RecipeType[];
   bookmarks: number[];
+  tags: string[];
   dispatch: (action: AppActions) => void;
 }
 
 interface State {}
 
-@connect((store: storeTypes) => {
+@connect((store: storeTypes, nav: any) => {
   return {
     bookmarks: store.bookmarks,
-    recent: store.recent,
+    recipes: recipes.filter(recipe => !recipe.tags.includes(nav.route.params.tag.name)),
   };
 })
-export default class HomeScreen extends React.Component<Props, State> {
+export default class FilterScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
   }
@@ -37,7 +38,7 @@ export default class HomeScreen extends React.Component<Props, State> {
     return (
       <FlatList
         style={styles.list}
-        data={recipes}
+        data={this.props.recipes}
         ItemSeparatorComponent={() => {
           return <View style={styles.separator} />;
         }}

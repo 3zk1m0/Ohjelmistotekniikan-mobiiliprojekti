@@ -1,33 +1,51 @@
 import React from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
+import { IconButton, Card } from "react-native-paper";
+import Markdown from "react-native-markdown-display";
 
 import { RecipeType } from "./types/recipe";
 import { storeTypes } from "./types/store";
 import { AppActions } from "./types/actions";
 
-import RecipeCard from "./components/RecipeCard";
-
 import { toggleBookmark } from "./actions/bookmarkActions";
 
-import { recipes } from "./data/recipes"
+import RecipeCard from "./components/RecipeCard";
 
+import { recipes } from "./data/recipes";
+
+interface ButtonProps {
+  bookmarked: boolean;
+  toggleBookmark: Function;
+}
+
+const EmptyScreen = () => {
+  return (
+    <View>
+      <Text style={styles.centerContainer}>
+        No Bookmarks
+      </Text>
+    </View>
+  );
+};
 
 interface Props {
-  recipes: RecipeType[];
   bookmarks: number[];
+  recipes: RecipeType[];
   dispatch: (action: AppActions) => void;
+  route: any;
+  navigation: any;
 }
 
 interface State {}
 
-@connect((store: storeTypes) => {
+@connect((store: storeTypes, nav: any) => {
   return {
     bookmarks: store.bookmarks,
-    recent: store.recent,
+    recipes: recipes.filter(recipe => store.bookmarks.includes(recipe.id))
   };
 })
-export default class HomeScreen extends React.Component<Props, State> {
+export default class BookmarkScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
   }
@@ -37,7 +55,7 @@ export default class HomeScreen extends React.Component<Props, State> {
     return (
       <FlatList
         style={styles.list}
-        data={recipes}
+        data={this.props.recipes}
         ItemSeparatorComponent={() => {
           return <View style={styles.separator} />;
         }}
@@ -51,6 +69,7 @@ export default class HomeScreen extends React.Component<Props, State> {
           />
         )}
         keyExtractor={(item) => item.id.toString()}
+        ListEmptyComponent={EmptyScreen()}
       />
     );
   }
@@ -59,6 +78,7 @@ export default class HomeScreen extends React.Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    margin: 15,
   },
   item: {
     backgroundColor: "#f9c2ff",
@@ -76,4 +96,9 @@ const styles = StyleSheet.create({
   separator: {
     height: 15,
   },
+  centerContainer: {
+    flex: 1,
+    justifyContent: 'center', 
+    alignItems: 'center' ,
+  }
 });
