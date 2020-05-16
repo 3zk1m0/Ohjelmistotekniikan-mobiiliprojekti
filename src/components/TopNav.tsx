@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Button, Paragraph, Menu, Divider, Provider } from "react-native-paper";
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   title: string;
@@ -11,7 +12,7 @@ interface Props {
   previous?: any;
 }
 
-class MenuBar extends React.Component {
+class MenuBar extends React.Component <Props,{}> {
   state = {
     visible: false,
   };
@@ -21,15 +22,16 @@ class MenuBar extends React.Component {
   _closeMenu = () => this.setState({ visible: false });
 
   render() {
+    
     return (
       <Menu
         visible={this.state.visible}
         onDismiss={this._closeMenu}
         anchor={<Appbar.Action icon="dots-vertical" onPress={this._openMenu} />}
       >
-        <Menu.Item onPress={() => {}} title="Help / FAQ" />
-        <Menu.Item onPress={() => {}} title="About Us" />
-        <Menu.Item onPress={() => {}} title="Preferences" />
+        <Menu.Item onPress={() => this.props.navigation.navigate("Help")} title="Help / FAQ" />
+        <Menu.Item onPress={() => this.props.navigation.navigate("About")} title="About Us" />
+        <Menu.Item onPress={() => this.props.navigation.navigate("Preferences")} title="Preferences" />
       </Menu>
     );
   }
@@ -55,7 +57,7 @@ export default class TopNav extends React.Component<Props, {}> {
           }}
         />}
         <Appbar.Content title={title} />
-        <MenuBar />
+        <MenuBar navigation={this.props.navigation}/>
       </Appbar.Header>
     );
   }

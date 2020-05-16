@@ -5,14 +5,13 @@ import { IconButton, Card } from "react-native-paper";
 import Markdown from "react-native-markdown-display";
 import { useTheme } from "@react-navigation/native";
 
-import { RecipeType } from "./types/recipe";
-import { storeTypes } from "./types/store";
-import { AppActions } from "./types/actions";
+import { RecipeType } from "../types/recipe";
+import { storeTypes } from "../types/store";
+import { AppActions } from "../types/actions";
 
-import { toggleBookmark } from "./actions/bookmarkActions";
-import DetailedRecipeCard from "./components/DetailedRecipeCard";
+import { toggleBookmark } from "../actions/bookmarkActions";
 
-import { recipes } from "./data/recipes";
+import { recipes } from "../data/recipes";
 
 
 interface ButtonProps {
@@ -45,33 +44,37 @@ interface Props {
 
 interface State {}
 
-@connect((store: storeTypes, nav:any) => {
-  return {
-    bookmarks: store.bookmarks,
-    recent: store.recent,
-    id: nav.route.params.id,
-    recipe: recipes[recipes.findIndex((i) => i.id === nav.route.params.id)],
-  };
-})
-export default class DetailedScreen extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-  }
+export default (props:Props) =>  {
 
-  render() {
-    const bookmarks = this.props.bookmarks;
-    const recipe = this.props.recipe;
+    const { colors } = useTheme();
+    const bookmarks = props.bookmarks;
+    const recipe = props.recipe;
     const content = recipe.content.split(/\r?\n/).map(row => row.trim()).join('\n');
     return (
-      
       <ScrollView>
-        <DetailedRecipeCard
-          {...this.props}
-        />
+        <Card style={styles.container}>
+          <Card.Cover source={{ uri: recipe.image }} />
+          <Card.Title
+            title={recipe.title}
+            right={() => (
+              <BookmarkButton
+                bookmarked={bookmarks.includes(props.id)}
+                toggleBookmark={() =>
+                  props.dispatch(toggleBookmark(recipe.id))
+                }
+              />
+            )}
+          />
+          <Card.Content>
+            <Markdown style={{text: {color: colors.text}}}>
+              {content}
+            </Markdown>
+          </Card.Content>
+        </Card>
       </ScrollView>
     );
   }
-}
+
 
 const styles = StyleSheet.create({
   container: {

@@ -1,5 +1,6 @@
 import { PreferenceActionTypes } from "../types/actions";
 
+
 const initState: {
   darkMode: boolean;
 } = {
@@ -12,7 +13,7 @@ export default (
 ): typeof initState => {
   switch (action.type) {
     case "TOGGLE_DARK_MODE":
-      return { ...state, darkMode: !state.darkMode };
+      return { ...state, darkMode: !state.darkMode};
     default:
       return state;
   }

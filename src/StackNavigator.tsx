@@ -8,6 +8,9 @@ import TabNavigator from "./TabNavigator";
 import TopNav from "./components/TopNav";
 import DetailedRecipeScreen from "./DetailedRecipeScreen";
 import FilterScreen from "./FilterScreen";
+import HelpScreen from "./HelpScreen";
+import AboutScreen from "./AboutScreen";
+import PreferencesScreen from "./PrefedencesScreen";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +29,9 @@ export default () => {
       <Stack.Screen name="Home" component={TabNavigator} />
       <Stack.Screen name="Detailed" component={DetailedRecipeScreen} />
       <Stack.Screen name="Filter" component={FilterScreen} />
+      <Stack.Screen name="Help" component={HelpScreen} />
+      <Stack.Screen name="About" component={AboutScreen} />
+      <Stack.Screen name="Preferences" component={PreferencesScreen} />
     </Stack.Navigator>
   );
 };

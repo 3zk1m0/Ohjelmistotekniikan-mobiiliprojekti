@@ -14,13 +14,7 @@ export const Main = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistedStore}>
-        <PaperProvider
-          settings={{
-            icon: (props) => <MaterialCommunityIcons {...props} />,
-          }}
-        >
           <RootNavigator />
-        </PaperProvider>
       </PersistGate>
     </Provider>
   );

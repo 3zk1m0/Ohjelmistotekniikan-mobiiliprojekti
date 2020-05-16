@@ -6,5 +6,6 @@ export interface storeTypes {
     recent: number[],
     preferences: {
         darkMode: boolean,
+        theme: any
     }
 }

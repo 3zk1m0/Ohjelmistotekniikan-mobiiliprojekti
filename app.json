@@ -2,12 +2,12 @@
   "expo": {
     "name": "mobiiliohjelmoinin-projektityo",
     "slug": "mobiiliohjelmoinin-projektityo",
+    "privacy": "unlisted",
     "platforms": [
-      "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -22,7 +22,13 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.ezkimo.OResepti",
+      "buildNumber": "0.1.0",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.ezkimo.OResepti",
+      "versionCode": 1
     }
   }
 }
