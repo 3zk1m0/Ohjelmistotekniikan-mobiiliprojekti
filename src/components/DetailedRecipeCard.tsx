@@ -6,12 +6,10 @@ import Markdown from "react-native-markdown-display";
 import { useTheme } from "@react-navigation/native";
 
 import { RecipeType } from "../types/recipe";
-import { storeTypes } from "../types/store";
 import { AppActions } from "../types/actions";
 
 import { toggleBookmark } from "../actions/bookmarkActions";
 
-import { recipes } from "../data/recipes";
 
 
 interface ButtonProps {

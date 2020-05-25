@@ -10,6 +10,7 @@ import { storeTypes } from "./types/store";
 import { AppActions } from "./types/actions";
 
 import StackNavigator from './StackNavigator';
+import SetupScreen from './SetupScreen';
 
 import { DrawerContent } from "./drawerContent";
 
@@ -21,6 +22,7 @@ const CustomDefaultTheme = {
   colors: {
     ...NavigationDefaultTheme.colors,
     ...PaperDefaultTheme.colors,
+    primary: "#FFC107",
   }
 }
 
@@ -63,6 +65,7 @@ export default class DetailedScreen extends React.Component<Props, State> {
       <NavigationContainer theme={theme}>
         <Drawer.Navigator initialRouteName="Stack" drawerContent={props => <DrawerContent {...props} />}>
           <Drawer.Screen name="Stack" component={StackNavigator} />
+          <Drawer.Screen name="Setup" component={SetupScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
       </PaperProvider>

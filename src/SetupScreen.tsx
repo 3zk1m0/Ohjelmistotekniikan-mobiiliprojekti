@@ -6,9 +6,11 @@ import { Chip, Card, Switch, Text, Button } from "react-native-paper";
 import { storeTypes } from "./types/store";
 import { AppActions } from "./types/actions";
 
-import { toggleDarkMode, toggleTag } from "./actions/preferencesActions"
+import { toggleDarkMode, toggleToggleTag } from "./actions/preferencesActions";
 
 import { tags } from "./data/tags";
+
+import TopNav from "./components/TopNav";
 
 interface Props {
   darkMode: boolean;
@@ -33,7 +35,8 @@ export default class DetailedScreen extends React.Component<Props, State> {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView style={styles.cardholder}>
+        <TopNav title={"Setup"} />
         <Card style={styles.container}>
           <Card.Title title="Preferences" />
           <Card.Content>
@@ -46,7 +49,7 @@ export default class DetailedScreen extends React.Component<Props, State> {
         </Card>
         <Card style={styles.container}>
           <Card.Content>
-            <Card.Title title="Filtered Tags" />
+            <Card.Title title="Prefered Tags" />
             <View
               style={{
                 flex: 1,
@@ -64,7 +67,7 @@ export default class DetailedScreen extends React.Component<Props, State> {
                     icon={tag.icon}
                     selected={this.props.tagList.includes(tag.name)}
                     onPress={() =>
-                      this.props.dispatch(toggleTag(tag.name))
+                      this.props.dispatch(toggleToggleTag(tag.name))
                     }
                   >
                     {tag.name}
@@ -74,12 +77,21 @@ export default class DetailedScreen extends React.Component<Props, State> {
             </View>
           </Card.Content>
         </Card>
+        <Button
+          style={{marginHorizontal: 15}}
+          icon="check"
+          mode="contained"
+          onPress={() => console.log("Pressed")}
+        >
+          Save
+        </Button>
       </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  cardholder: {},
   container: {
     flex: 1,
     margin: 15,
@@ -90,8 +102,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
   },
-  title: {
-    fontSize: 32,
+  chip: {
+    margin: 5,
   },
   list: {
     marginTop: 15,

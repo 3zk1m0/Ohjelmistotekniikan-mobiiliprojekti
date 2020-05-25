@@ -2,11 +2,11 @@
 
 import { RecipeType } from "../types/Recipe"
 
-export const recipes: Omit<RecipeType, 'onPress'>[] = [
+export const recipes:RecipeType[] = [
   {
     id: 1,
     title: 'Pääkallopata',
-    tags: [],
+    tags: ["All Recipes", "Cheap", "Meat"],
     content:
     `
     ### Ainekset (4 annosta)
@@ -26,7 +26,7 @@ export const recipes: Omit<RecipeType, 'onPress'>[] = [
   {
     id: 2,
     title: "Riisin keittäminen",
-    tags: [],
+    tags: ["All Recipes", "Cheap", "Vegan"],
     content:
     `
     Lisäkkeeksi keitettävä riisi keitetään yleensä vähäisessä nestemäärässä, jolloin koko nestemäärä imeytetään riisinjyviin. Nesteeksi käy veden lisäksi esimerkiksi liha-, kana-, kala- tai kasvisliemi. 
@@ -56,7 +56,7 @@ Näin keität riisin:
   },
   {
     id: 3,
-    tags: [],
+    tags: ["All Recipes", "Meat"],
     title: 'Chili con carne',
     content: `
     ##### Ainekset
@@ -97,7 +97,7 @@ Näin keität riisin:
   },
   {
     id: 4,
-    tags: [],
+    tags: ["All Recipes", "Meat", "Mjölk"],
     title: 'Makaronilaatikko',
     content: `
       #### Ainekset

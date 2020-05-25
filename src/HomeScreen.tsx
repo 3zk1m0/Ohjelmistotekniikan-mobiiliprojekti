@@ -1,6 +1,7 @@
 import React from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { ScrollView, View, FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { Text } from "react-native-paper";
 
 import { RecipeType } from "./types/recipe";
 import { storeTypes } from "./types/store";
@@ -8,14 +9,28 @@ import { AppActions } from "./types/actions";
 
 import RecipeCard from "./components/RecipeCard";
 
+import RecipeCarousel from "./components/RecipeCarousel";
+
 import { toggleBookmark } from "./actions/bookmarkActions";
 
-import { recipes } from "./data/recipes"
+import { recipes } from "./data/recipes";
+
+const EmptyScreen = () => {
+  return (
+    <View style={styles.centerContainer}>
+      <Text>
+        No Recent Recipes
+      </Text>
+    </View>
+  );
+};
 
 
 interface Props {
   recipes: RecipeType[];
   bookmarks: number[];
+  recent: number[];
+  tagList: string[];
   dispatch: (action: AppActions) => void;
 }
 
@@ -25,6 +40,7 @@ interface State {}
   return {
     bookmarks: store.bookmarks,
     recent: store.recent,
+    tagList: store.preferences.tagList
   };
 })
 export default class HomeScreen extends React.Component<Props, State> {
@@ -32,31 +48,66 @@ export default class HomeScreen extends React.Component<Props, State> {
     super(props);
   }
 
+  handleToggle = (id: number) => {
+    this.props.dispatch(toggleBookmark(id));
+  };
+
   render() {
-    const bookmarks = this.props.bookmarks;
+    const { bookmarks, recent, tagList } = this.props;
+
+    let recentRecipes:RecipeType[] = [];
+    recent.forEach(id => {
+      if (id != 0) recentRecipes.push(recipes[recipes.findIndex((x) => x.id == id)])
+    });
+
+    let newRecipes = [...recipes].filter((recipe) => tagList.every((tag) => recipe.tags.includes(tag)))
+    newRecipes.reverse().slice(0, 5);
+
     return (
-      <FlatList
-        style={styles.list}
-        data={recipes}
-        ItemSeparatorComponent={() => {
-          return <View style={styles.separator} />;
-        }}
-        renderItem={({ item }) => (
-          <RecipeCard
-            id={item.id}
-            title={item.title}
-            image={item.image}
-            bookmarked={bookmarks.includes(item.id)}
-            toggleBookmark={() => this.props.dispatch(toggleBookmark(item.id))}
-          />
-        )}
-        keyExtractor={(item) => item.id.toString()}
-      />
+        <FlatList
+          data={recentRecipes}
+          ItemSeparatorComponent={() => {
+            return <View style={styles.separator} />;
+          }}
+          renderItem={({ item }) => (
+            <View style={styles.list}>
+            <RecipeCard
+              id={item.id}
+              title={item.title}
+              image={item.image}
+              bookmarked={bookmarks.includes(item.id)}
+              toggleBookmark={() => this.handleToggle(item.id)}
+            />
+            </View>
+          )}
+          ListHeaderComponent={
+            <>
+              <Text style={styles.topicText}>New</Text>
+              <RecipeCarousel
+                data={newRecipes}
+                bookmarks={bookmarks}
+                toggleBookmark={this.handleToggle}
+              />
+              <Text style={styles.topicText}>Recent</Text>
+            </>
+          }
+          keyExtractor={(item) =>
+            item.id.toString() + Math.random().toString(36).substring(7)
+          }
+          ListEmptyComponent={EmptyScreen()}
+        />
     );
   }
 }
 
 const styles = StyleSheet.create({
+  topicText: {
+    fontWeight: "bold",
+    paddingTop: 15,
+    paddingBottom: 15,
+    fontSize: 20,
+    paddingHorizontal: 15,
+  },
   container: {
     flex: 1,
   },
@@ -70,10 +121,14 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   list: {
-    marginTop: 15,
-    marginHorizontal: 15,
+    paddingHorizontal: 15,
   },
   separator: {
     height: 15,
   },
+  centerContainer: {
+    flex: 1,
+    justifyContent: 'center', 
+    alignItems: 'center' ,
+  }
 });

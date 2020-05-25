@@ -6,17 +6,17 @@ import { RecipeType } from "./types/recipe";
 import { storeTypes } from "./types/store";
 import { AppActions } from "./types/actions";
 
-import RecipeCard from "./components/RecipeCard";
+
 
 import { toggleBookmark } from "./actions/bookmarkActions";
 
-import { recipes } from "./data/recipes"
+import { recipes } from "./data/recipes";
 
+import Search from "./components/Search";
 
 interface Props {
   recipes: RecipeType[];
   bookmarks: number[];
-  tags: string[];
   dispatch: (action: AppActions) => void;
 }
 
@@ -25,7 +25,7 @@ interface State {}
 @connect((store: storeTypes, nav: any) => {
   return {
     bookmarks: store.bookmarks,
-    recipes: recipes.filter(recipe => recipe.tags.includes(nav.route.params.tag.name)),
+    recipes: recipes,
   };
 })
 export default class FilterScreen extends React.Component<Props, State> {
@@ -33,26 +33,19 @@ export default class FilterScreen extends React.Component<Props, State> {
     super(props);
   }
 
+  handleBookmark  = (id:number): void => {
+    console.log(id);
+    //this.props.dispatch(toggleBookmark(id))
+  }
+
   render() {
     const bookmarks = this.props.bookmarks;
+    const recipes = this.props.recipes;
     return (
-      <FlatList
-        style={styles.list}
-        data={this.props.recipes}
-        ItemSeparatorComponent={() => {
-          return <View style={styles.separator} />;
-        }}
-        renderItem={({ item }) => (
-          <RecipeCard
-            id={item.id}
-            title={item.title}
-            image={item.image}
-            bookmarked={bookmarks.includes(item.id)}
-            toggleBookmark={() => this.props.dispatch(toggleBookmark(item.id))}
-          />
-        )}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      <View style={{flexGrow: 1}}>
+        <Search recipes={recipes} bookmarks={bookmarks} action={this.handleBookmark}/>
+
+      </View>
     );
   }
 }

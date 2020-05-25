@@ -29,6 +29,8 @@
     "android": {
       "package": "com.ezkimo.OResepti",
       "versionCode": 1
-    }
+    },
+    "sdkVersion": "37.0.0",
+    "description": ""
   }
 }

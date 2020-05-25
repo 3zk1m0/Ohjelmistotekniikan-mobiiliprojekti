@@ -14,23 +14,7 @@ import DetailedRecipeCard from "./components/DetailedRecipeCard";
 
 import { recipes } from "./data/recipes";
 
-
-interface ButtonProps {
-  bookmarked: boolean;
-  toggleBookmark: Function;
-}
-
-const BookmarkButton = (props: ButtonProps) => {
-  return (
-    <IconButton
-      icon={props.bookmarked ? "bookmark" : "bookmark-outline"}
-      size={20}
-      onPress={() => props.toggleBookmark()}
-    >
-      Bookmark
-    </IconButton>
-  );
-};
+import { appendRecent } from "./actions/recentActions"
 
 interface Props {
   recipes: RecipeType[];
@@ -56,12 +40,10 @@ interface State {}
 export default class DetailedScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    this.props.dispatch(appendRecent(this.props.id))
   }
 
   render() {
-    const bookmarks = this.props.bookmarks;
-    const recipe = this.props.recipe;
-    const content = recipe.content.split(/\r?\n/).map(row => row.trim()).join('\n');
     return (
       
       <ScrollView>
