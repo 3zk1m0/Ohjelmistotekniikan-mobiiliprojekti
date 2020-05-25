@@ -6,7 +6,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
 import {
   Avatar,
   Caption,
@@ -22,19 +22,36 @@ import Animated from 'react-native-reanimated';
 
 import { PreferencesContext } from './context/preferencesContext';
 
-type Props = DrawerContentComponentProps<DrawerNavigationProp>;
 
-export function DrawerContent(props: Props) {
-  const paperTheme = useTheme();
-  const { rtl, theme, toggleRTL, toggleTheme } = React.useContext(
-    PreferencesContext
-  );
+export function DrawerContent(props: any) {
 
   const translateX = Animated.interpolate(props.progress, {
     inputRange: [0, 0.5, 0.7, 0.8, 1],
     outputRange: [-100, -85, -70, -45, 0],
   });
 
+  const tags = [
+    {
+      name: "All Recipes",
+      icon: "silverware-fork-knife",
+    },
+    {
+      name: "Cheap",
+      icon: "currency-eur",
+    },
+    {
+      name: "Meat",
+      icon: "pig",
+    },
+    {
+      name: "Vegan",
+      icon: "carrot",
+    },
+    {
+      name: "Mjölk",
+      icon: "cow",
+    },
+  ]
   return (
     <DrawerContentScrollView {...props}>
       <Animated.View
@@ -42,82 +59,48 @@ export function DrawerContent(props: Props) {
         style={[
           styles.drawerContent,
           {
-            backgroundColor: paperTheme.colors.surface,
             transform: [{ translateX }],
           },
         ]}
       >
-        <View style={styles.userInfoSection}>
-          <View style={styles.row}>
-          <TouchableOpacity
-            style={{marginRight: 20}}
-            onPress={() => {
-              props.navigation.toggleDrawer();
+        <View 
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignContent: 'center',
+            marginVertical: 10,
+          }}
+        >
+          <Image
+            style={{width: 100, height: 100}}
+            source={{
+              uri:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Google_Material_Design_Logo.svg/512px-Google_Material_Design_Logo.svg.png',
             }}
-          >
-            
-            <Avatar.Image
-              source={{
-                uri:
-                  'https://eu.ui-avatars.com/api/?name=The+Test',
-              }}
-              size={50}
-            />
-          </TouchableOpacity>
-          <View>
-          <Title style={styles.title}>The User</Title>
-          </View>
-          </View>
-      
+          />
         </View>
-        <Drawer.Section style={styles.drawerSection}>
-          <DrawerItem
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons
-                name="account-outline"
-                color={color}
-                size={size}
-              />
-            )}
-            label="Profile"
-            onPress={() => {}}
-          />
-          <DrawerItem
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons
-                name="bookmark-outline"
-                color={color}
-                size={size}
-              />
-            )}
-            label="Bookmarks...."
-            onPress={() => {}}
-          />
-          <DrawerItem
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons name="tune" color={color} size={size} />
-            )}
-            label="Preferences"
-            onPress={() => {}}
-          />
-        </Drawer.Section>
-        <Drawer.Section title="Preferences">
-          <TouchableRipple onPress={toggleTheme}>
-            <View style={styles.preference}>
-              <Text>Dark Theme</Text>
-              <View pointerEvents="none">
-                <Switch value={theme === 'dark'} color={paperTheme.colors.primary} />
-              </View>
-            </View>
-          </TouchableRipple>
-          {/*<TouchableRipple onPress={toggleRTL}>
-            <View style={styles.preference}>
-              <Text>RTL</Text>
-              <View pointerEvents="none">
-                <Switch value={rtl === 'right'} />
-              </View>
-            </View>
-            </TouchableRipple>*/}
+        <Drawer.Section 
+          title="Tags"
+          style={styles.drawerSection}
+          >
+            {tags.map( tag => {
+              return(
+                <DrawerItem
+                  icon={({ color, size }) => (
+                    <MaterialCommunityIcons
+                      name={tag.icon}
+                      color={color}
+                      size={size}
+                    />
+                  )}
+                  key={tag.name}
+                  label={tag.name}
+                  labelStyle={{fontFamily: 'Roboto'}}
+                  onPress={() => {props.navigation.navigate("Filter", {tag})}}
+                />
+              )
+            })}
         </Drawer.Section>
       </Animated.View>
     </DrawerContentScrollView>

@@ -1,21 +1,19 @@
 {
   "expo": {
-    "name": "OResepti",
-    "slug": "OResepti",
-    "privacy": "public",
-    "sdkVersion": "36.0.0",
+    "name": "mobiiliohjelmoinin-projektityo",
+    "slug": "mobiiliohjelmoinin-projektityo",
+    "privacy": "unlisted",
     "platforms": [
-      "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#1ba1f2"
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,7 +22,15 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.ezkimo.OResepti",
+      "buildNumber": "0.1.0",
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "package": "com.ezkimo.OResepti",
+      "versionCode": 1
+    },
+    "sdkVersion": "37.0.0",
+    "description": ""
   }
 }
